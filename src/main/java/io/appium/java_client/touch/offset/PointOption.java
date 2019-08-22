@@ -1,12 +1,13 @@
 package io.appium.java_client.touch.offset;
 
-import static java.util.Optional.ofNullable;
-
 import io.appium.java_client.touch.ActionOptions;
 import org.openqa.selenium.Point;
 
 import java.util.Map;
 
+import static java.util.Optional.ofNullable;
+
+@SuppressWarnings("unchecked")
 public class PointOption<T extends PointOption<T>> extends ActionOptions<T> {
 
     protected Point coordinates;
@@ -18,8 +19,8 @@ public class PointOption<T extends PointOption<T>> extends ActionOptions<T> {
      * @param offset is an offset value.
      * @return a built option
      */
-    public static PointOption point(Point offset) {
-        return new PointOption().withCoordinates(offset);
+    public static <T extends PointOption<T>> PointOption<T> point(Point offset) {
+        return (PointOption<T>) new PointOption<>().withCoordinates(offset);
     }
 
     /**
@@ -30,8 +31,8 @@ public class PointOption<T extends PointOption<T>> extends ActionOptions<T> {
      * @param yOffset is y value.
      * @return a built option
      */
-    public static PointOption point(int xOffset, int yOffset) {
-        return new PointOption().withCoordinates(xOffset, yOffset);
+    public static <T extends PointOption<T>> PointOption <T> point(int xOffset, int yOffset) {
+        return (PointOption<T>) new PointOption<>().withCoordinates(xOffset, yOffset);
     }
 
     /**
@@ -54,23 +55,22 @@ public class PointOption<T extends PointOption<T>> extends ActionOptions<T> {
      * @return self-reference
      */
     public T withCoordinates(int xOffset, int yOffset) {
-        coordinates = new Point(xOffset, yOffset);
+        this.coordinates = new Point(xOffset, yOffset);
         //noinspection unchecked
         return (T) this;
     }
 
     @Override
     protected void verify() {
-        //noinspection ResultOfMethodCallIgnored
-        ofNullable(coordinates).orElseThrow(() -> new IllegalArgumentException(
+        ofNullable(this.coordinates).orElseThrow(() -> new IllegalArgumentException(
                 "Coordinate values must be defined"));
     }
 
     @Override
     public Map<String, Object> build() {
         final Map<String, Object> result = super.build();
-        result.put("x", coordinates.x);
-        result.put("y", coordinates.y);
+        result.put("x", this.coordinates.x);
+        result.put("y", this.coordinates.y);
         return result;
     }
 }

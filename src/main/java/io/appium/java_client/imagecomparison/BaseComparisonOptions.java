@@ -16,11 +16,11 @@
 
 package io.appium.java_client.imagecomparison;
 
-import static java.util.Optional.ofNullable;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import static java.util.Optional.ofNullable;
 
 public abstract class BaseComparisonOptions<T extends BaseComparisonOptions<T>> {
     private Boolean visualize;
@@ -32,9 +32,9 @@ public abstract class BaseComparisonOptions<T extends BaseComparisonOptions<T>> 
      *
      * @return self instance for chaining
      */
+    @SuppressWarnings("unchecked")
     public T withEnabledVisualization() {
-        visualize = true;
-        //noinspection unchecked
+        this.visualize = true;
         return (T) this;
     }
 
@@ -46,7 +46,7 @@ public abstract class BaseComparisonOptions<T extends BaseComparisonOptions<T>> 
      */
     public Map<String, Object> build() {
         final ImmutableMap.Builder<String, Object> builder = ImmutableMap.builder();
-        ofNullable(visualize).map(x -> builder.put("visualize", x));
+        ofNullable(this.visualize).map(x -> builder.put("visualize", x));
         return builder.build();
     }
 }

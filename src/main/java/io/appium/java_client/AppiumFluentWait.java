@@ -17,10 +17,8 @@
 package io.appium.java_client;
 
 import com.google.common.base.Throwables;
-
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Sleeper;
@@ -35,49 +33,6 @@ import java.util.function.Supplier;
 
 public class AppiumFluentWait<T> extends FluentWait<T> {
     private Function<IterationInfo, Duration> pollingStrategy = null;
-
-    public static class IterationInfo {
-        /**
-         * The current iteration number.
-         *
-         * @return current iteration number. It starts from 1
-         */
-        @Getter(AccessLevel.PUBLIC) private final long number;
-        /**
-         * The amount of elapsed time.
-         *
-         * @return the amount of elapsed time
-         */
-        @Getter(AccessLevel.PUBLIC) private final Duration elapsed;
-        /**
-         * The amount of total time.
-         *
-         * @return the amount of total time
-         */
-        @Getter(AccessLevel.PUBLIC) private final Duration total;
-        /**
-         * The current interval.
-         *
-         * @return The actual value of current interval or the default one if it is not set
-         */
-        @Getter(AccessLevel.PUBLIC) private final Duration interval;
-
-        /**
-         * The class is used to represent information about a single loop iteration in {@link #until(Function)}
-         * method.
-         *
-         * @param number loop iteration number, starts from 1
-         * @param elapsed the amount of elapsed time since the loop started
-         * @param total the amount of total time to run the loop
-         * @param interval the default time interval for each loop iteration
-         */
-        public IterationInfo(long number, Duration elapsed, Duration total, Duration interval) {
-            this.number = number;
-            this.elapsed = elapsed;
-            this.total = total;
-            this.interval = interval;
-        }
-    }
 
     /**
      * The input value to pass to the evaluated conditions.
@@ -246,11 +201,11 @@ public class AppiumFluentWait<T> extends FluentWait<T> {
 
             try {
                 Duration interval = getInterval();
-                if (pollingStrategy != null) {
+                if (this.pollingStrategy != null) {
                     final IterationInfo info = new IterationInfo(iterationNumber,
                             Duration.between(start, getClock().instant()), getTimeout(),
                             interval);
-                    interval = pollingStrategy.apply(info);
+                    interval = this.pollingStrategy.apply(info);
                 }
                 getSleeper().sleep(interval);
             } catch (InterruptedException e) {
@@ -269,5 +224,48 @@ public class AppiumFluentWait<T> extends FluentWait<T> {
         }
         Throwables.throwIfUnchecked(e);
         throw new WebDriverException(e);
+    }
+
+    public static class IterationInfo {
+        /**
+         * The current iteration number.
+         *
+         * @return current iteration number. It starts from 1
+         */
+        @Getter(AccessLevel.PUBLIC) private final long number;
+        /**
+         * The amount of elapsed time.
+         *
+         * @return the amount of elapsed time
+         */
+        @Getter(AccessLevel.PUBLIC) private final Duration elapsed;
+        /**
+         * The amount of total time.
+         *
+         * @return the amount of total time
+         */
+        @Getter(AccessLevel.PUBLIC) private final Duration total;
+        /**
+         * The current interval.
+         *
+         * @return The actual value of current interval or the default one if it is not set
+         */
+        @Getter(AccessLevel.PUBLIC) private final Duration interval;
+
+        /**
+         * The class is used to represent information about a single loop iteration in {@link #until(Function)}
+         * method.
+         *
+         * @param number loop iteration number, starts from 1
+         * @param elapsed the amount of elapsed time since the loop started
+         * @param total the amount of total time to run the loop
+         * @param interval the default time interval for each loop iteration
+         */
+        public IterationInfo(long number, Duration elapsed, Duration total, Duration interval) {
+            this.number = number;
+            this.elapsed = elapsed;
+            this.total = total;
+            this.interval = interval;
+        }
     }
 }

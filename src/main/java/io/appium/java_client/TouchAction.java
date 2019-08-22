@@ -16,13 +16,8 @@
 
 package io.appium.java_client;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.ImmutableList.builder;
-import static java.util.stream.Collectors.toList;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-
 import io.appium.java_client.touch.ActionOptions;
 import io.appium.java_client.touch.LongPressOptions;
 import io.appium.java_client.touch.TapOptions;
@@ -32,6 +27,10 @@ import io.appium.java_client.touch.offset.PointOption;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.ImmutableList.builder;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Used for Webdriver 3 touch actions
@@ -43,14 +42,15 @@ import java.util.Map;
  * Calling perform() sends the action command to the Mobile Driver. Otherwise,
  * more and more actions can be chained.
  */
+@SuppressWarnings("unchecked")
 public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T> {
 
+    private final PerformsTouchActions performsTouchActions;
     protected ImmutableList.Builder<ActionParameter> parameterBuilder;
-    private PerformsTouchActions performsTouchActions;
 
     public TouchAction(PerformsTouchActions performsTouchActions) {
         this.performsTouchActions = checkNotNull(performsTouchActions);
-        parameterBuilder = builder();
+        this.parameterBuilder = builder();
     }
 
     /**
@@ -60,8 +60,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      * @return this TouchAction, for chaining.
      */
     public T press(PointOption pressOptions) {
-        parameterBuilder.add(new ActionParameter("press", pressOptions));
-        //noinspection unchecked
+        this.parameterBuilder.add(new ActionParameter("press", pressOptions));
         return (T) this;
     }
 
@@ -72,8 +71,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public T release() {
         ActionParameter action = new ActionParameter("release");
-        parameterBuilder.add(action);
-        //noinspection unchecked
+        this.parameterBuilder.add(action);
         return (T) this;
     }
 
@@ -90,7 +88,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public T moveTo(PointOption moveToOptions) {
         ActionParameter action = new ActionParameter("moveTo", moveToOptions);
-        parameterBuilder.add(action);
+        this.parameterBuilder.add(action);
         return (T) this;
     }
 
@@ -102,7 +100,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public T tap(TapOptions tapOptions) {
         ActionParameter action = new ActionParameter("tap", tapOptions);
-        parameterBuilder.add(action);
+        this.parameterBuilder.add(action);
         return (T) this;
     }
 
@@ -114,7 +112,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public T tap(PointOption tapOptions) {
         ActionParameter action = new ActionParameter("tap", tapOptions);
-        parameterBuilder.add(action);
+        this.parameterBuilder.add(action);
         return (T) this;
     }
 
@@ -125,8 +123,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public T waitAction() {
         ActionParameter action = new ActionParameter("wait");
-        parameterBuilder.add(action);
-        //noinspection unchecked
+        this.parameterBuilder.add(action);
         return (T) this;
     }
 
@@ -138,8 +135,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public T waitAction(WaitOptions waitOptions) {
         ActionParameter action = new ActionParameter("wait", waitOptions);
-        parameterBuilder.add(action);
-        //noinspection unchecked
+        this.parameterBuilder.add(action);
         return (T) this;
     }
 
@@ -151,8 +147,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public T longPress(LongPressOptions longPressOptions) {
         ActionParameter action = new ActionParameter("longPress", longPressOptions);
-        parameterBuilder.add(action);
-        //noinspection unchecked
+        this.parameterBuilder.add(action);
         return (T) this;
     }
 
@@ -164,8 +159,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public T longPress(PointOption longPressOptions) {
         ActionParameter action = new ActionParameter("longPress", longPressOptions);
-        parameterBuilder.add(action);
-        //noinspection unchecked
+        this.parameterBuilder.add(action);
         return (T) this;
     }
 
@@ -174,7 +168,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      */
     public void cancel() {
         ActionParameter action = new ActionParameter("cancel");
-        parameterBuilder.add(action);
+        this.parameterBuilder.add(action);
         this.perform();
     }
 
@@ -183,9 +177,9 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      *
      * @return this TouchAction, for possible segmented-touches.
      */
+    @Override
     public T perform() {
-        performsTouchActions.performTouchAction(this);
-        //noinspection unchecked
+        this.performsTouchActions.performTouchAction(this);
         return (T) this;
     }
 
@@ -195,7 +189,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      * @return A map of parameters for this touch action to pass as part of mjsonwp.
      */
     protected Map<String, List<Object>> getParameters() {
-        List<ActionParameter> actionList = parameterBuilder.build();
+        List<ActionParameter> actionList = this.parameterBuilder.build();
         return ImmutableMap.of("actions", actionList.stream()
                 .map(ActionParameter::getParameterMap).collect(toList()));
     }
@@ -206,8 +200,7 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      * @return this TouchAction, for possible segmented-touches.
      */
     protected T clearParameters() {
-        parameterBuilder = builder();
-        //noinspection unchecked
+        this.parameterBuilder = builder();
         return (T) this;
     }
 
@@ -215,25 +208,24 @@ public class TouchAction<T extends TouchAction<T>> implements PerformsActions<T>
      * Just holds values to eventually return the parameters required for the mjsonwp.
      */
     protected class ActionParameter {
-        private String actionName;
-        private ImmutableMap.Builder<String, Object> optionsBuilder;
+        private final String actionName;
+        private final ImmutableMap.Builder<String, Object> optionsBuilder;
 
         public ActionParameter(String actionName) {
             this.actionName = actionName;
-            optionsBuilder = ImmutableMap.builder();
+            this.optionsBuilder = ImmutableMap.builder();
         }
 
         public ActionParameter(String actionName, ActionOptions opts) {
             checkNotNull(opts);
             this.actionName = actionName;
-            optionsBuilder = ImmutableMap.builder();
-            //noinspection unchecked
-            optionsBuilder.putAll(opts.build());
+            this.optionsBuilder = ImmutableMap.builder();
+            this.optionsBuilder.putAll(opts.build());
         }
 
         public ImmutableMap<String, Object> getParameterMap() {
             ImmutableMap.Builder<String, Object> builder = ImmutableMap.builder();
-            builder.put("action", actionName).put("options", optionsBuilder.build());
+            builder.put("action", this.actionName).put("options", this.optionsBuilder.build());
             return builder.build();
         }
     }

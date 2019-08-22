@@ -16,6 +16,17 @@
 
 package io.appium.java_client;
 
+import com.google.common.collect.ImmutableMap;
+import io.appium.java_client.appmanagement.ApplicationState;
+import io.appium.java_client.appmanagement.BaseActivateApplicationOptions;
+import io.appium.java_client.appmanagement.BaseInstallApplicationOptions;
+import io.appium.java_client.appmanagement.BaseRemoveApplicationOptions;
+import io.appium.java_client.appmanagement.BaseTerminateApplicationOptions;
+
+import javax.annotation.Nullable;
+import java.time.Duration;
+import java.util.AbstractMap;
+
 import static io.appium.java_client.MobileCommand.ACTIVATE_APP;
 import static io.appium.java_client.MobileCommand.CLOSE_APP;
 import static io.appium.java_client.MobileCommand.INSTALL_APP;
@@ -27,18 +38,6 @@ import static io.appium.java_client.MobileCommand.RESET;
 import static io.appium.java_client.MobileCommand.RUN_APP_IN_BACKGROUND;
 import static io.appium.java_client.MobileCommand.TERMINATE_APP;
 import static io.appium.java_client.MobileCommand.prepareArguments;
-
-import com.google.common.collect.ImmutableMap;
-
-import io.appium.java_client.appmanagement.ApplicationState;
-import io.appium.java_client.appmanagement.BaseActivateApplicationOptions;
-import io.appium.java_client.appmanagement.BaseInstallApplicationOptions;
-import io.appium.java_client.appmanagement.BaseRemoveApplicationOptions;
-import io.appium.java_client.appmanagement.BaseTerminateApplicationOptions;
-
-import java.time.Duration;
-import java.util.AbstractMap;
-import javax.annotation.Nullable;
 
 public interface InteractsWithApps extends ExecutesMethod {
 
@@ -66,7 +65,7 @@ public interface InteractsWithApps extends ExecutesMethod {
      * @param options Set of the corresponding instllation options for
      *                the particular platform.
      */
-    default void installApp(String appPath, @Nullable BaseInstallApplicationOptions options) {
+    default <T extends BaseInstallApplicationOptions <T>> void installApp(String appPath, @Nullable BaseInstallApplicationOptions <T> options) {
         String[] parameters = options == null ? new String[]{"appPath"} :
                 new String[]{"appPath", "options"};
         Object[] values = options == null ? new Object[]{appPath} :
@@ -122,7 +121,7 @@ public interface InteractsWithApps extends ExecutesMethod {
      *                 particular platform.
      * @return true if the uninstall was successful.
      */
-    default boolean removeApp(String bundleId, @Nullable BaseRemoveApplicationOptions options) {
+    default <T extends BaseRemoveApplicationOptions <T>> boolean removeApp(String bundleId, @Nullable BaseRemoveApplicationOptions <T> options) {
         String[] parameters = options == null ? new String[]{"bundleId"} :
                 new String[]{"bundleId", "options"};
         Object[] values = options == null ? new Object[]{bundleId} :
@@ -157,7 +156,7 @@ public interface InteractsWithApps extends ExecutesMethod {
      * @param options  the set of activation options supported by the
      *                 particular platform.
      */
-    default void activateApp(String bundleId, @Nullable BaseActivateApplicationOptions options) {
+    default <T extends BaseActivateApplicationOptions <T>> void activateApp(String bundleId, @Nullable BaseActivateApplicationOptions <T> options) {
         String[] parameters = options == null ? new String[]{"bundleId"} :
                 new String[]{"bundleId", "options"};
         Object[] values = options == null ? new Object[]{bundleId} :
@@ -195,7 +194,7 @@ public interface InteractsWithApps extends ExecutesMethod {
      *                 particular platform.
      * @return true if the app was running before and has been successfully stopped.
      */
-    default boolean terminateApp(String bundleId, @Nullable BaseTerminateApplicationOptions options) {
+    default <T extends BaseTerminateApplicationOptions <T>> boolean terminateApp(String bundleId, @Nullable BaseTerminateApplicationOptions <T> options) {
         String[] parameters = options == null ? new String[]{"bundleId"} :
                 new String[]{"bundleId", "options"};
         Object[] values = options == null ? new Object[]{bundleId} :

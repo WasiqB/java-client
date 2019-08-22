@@ -16,16 +16,6 @@
 
 package io.appium.java_client.android;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import io.appium.java_client.appmanagement.ApplicationState;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -40,9 +30,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AndroidDriverTest extends BaseAndroidTest {
-
     @Test
     public void sendSMSTest() {
         try {
@@ -51,7 +49,6 @@ public class AndroidDriverTest extends BaseAndroidTest {
             fail("method works only in emulators");
         }
     }
-
 
     @Test
     public void getStatusTest() {
@@ -158,14 +155,14 @@ public class AndroidDriverTest extends BaseAndroidTest {
     @Test
     public void pushFileTest() {
         byte[] data = Base64.encodeBase64(
-                "The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra"
-                        .getBytes());
+            "The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra"
+                .getBytes());
         driver.pushFile("/data/local/tmp/remote.txt", data);
         byte[] returnData = driver.pullFile("/data/local/tmp/remote.txt");
         String returnDataDecoded = new String(returnData);
         assertEquals(
-                "The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra",
-                returnDataDecoded);
+            "The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra",
+            returnDataDecoded);
     }
 
     @Test
@@ -173,14 +170,14 @@ public class AndroidDriverTest extends BaseAndroidTest {
         File temp = File.createTempFile("Temp_", "_test");
         try {
             FileUtils.writeStringToFile(temp, "The eventual code is no "
-                    + "more than the deposit of your understanding. ~E. W. Dijkstra", "UTF-8", true);
+                + "more than the deposit of your understanding. ~E. W. Dijkstra", "UTF-8", true);
             driver.pushFile("/data/local/tmp/remote2.txt", temp);
             byte[] returnData = driver.pullFile("/data/local/tmp/remote2.txt");
             String returnDataDecoded = new String(returnData);
             assertEquals(
-                    "The eventual code is no more than the deposit of "
-                            + "your understanding. ~E. W. Dijkstra",
-                    returnDataDecoded);
+                "The eventual code is no more than the deposit of "
+                    + "your understanding. ~E. W. Dijkstra",
+                returnDataDecoded);
         } finally {
             FileUtils.forceDelete(temp);
         }
@@ -239,7 +236,7 @@ public class AndroidDriverTest extends BaseAndroidTest {
     @Test
     public void pullFileTest() {
         byte[] data =
-                driver.pullFile("/data/system/users/userlist.xml");
+            driver.pullFile("/data/system/users/userlist.xml");
         assert (data.length > 0);
     }
 
@@ -289,8 +286,6 @@ public class AndroidDriverTest extends BaseAndroidTest {
         for (int i = 0; i < supportedPerformanceDataTypes.size(); ++i) {
             assertEquals(dataTypes.get(i), supportedPerformanceDataTypes.get(i));
         }
-
-
     }
 
     @Test
@@ -307,17 +302,16 @@ public class AndroidDriverTest extends BaseAndroidTest {
                 assertEquals(valueTable.subList(0, 0).size(), valueTable.subList(j, j).size());
             }
         }
-
     }
 
     @Test
     public void getCurrentPackageTest() {
         assertEquals(APP_ID, driver.getCurrentPackage());
     }
-    
-    @Test public void validateAllSessions() {
-    	List<Map<String,Object>> jsonMap = driver.getAllSessionDetails();
-		assertNotNull(jsonMap);
-    }
 
+    @Test
+    public void validateAllSessions() {
+        List<Map<String, Object>> jsonMap = driver.getAllSessionDetails();
+        assertNotNull(jsonMap);
+    }
 }

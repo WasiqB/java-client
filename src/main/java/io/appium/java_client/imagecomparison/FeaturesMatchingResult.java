@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unchecked")
 public class FeaturesMatchingResult extends ComparisonResult {
     private static final String COUNT = "count";
     private static final String TOTAL_COUNT = "totalCount";
@@ -66,7 +67,6 @@ public class FeaturesMatchingResult extends ComparisonResult {
      */
     public List<Point> getPoints1() {
         verifyPropertyPresence(POINTS1);
-        //noinspection unchecked
         return ((List<Map<String, Object>>) getCommandResult().get(POINTS1)).stream()
                 .map(ComparisonResult::mapToPoint)
                 .collect(Collectors.toList());
@@ -79,7 +79,6 @@ public class FeaturesMatchingResult extends ComparisonResult {
      */
     public Rectangle getRect1() {
         verifyPropertyPresence(RECT1);
-        //noinspection unchecked
         return mapToRect((Map<String, Object>) getCommandResult().get(RECT1));
     }
 
@@ -90,7 +89,6 @@ public class FeaturesMatchingResult extends ComparisonResult {
      */
     public List<Point> getPoints2() {
         verifyPropertyPresence(POINTS2);
-        //noinspection unchecked
         return ((List<Map<String, Object>>) getCommandResult().get(POINTS2)).stream()
                 .map(ComparisonResult::mapToPoint)
                 .collect(Collectors.toList());
@@ -103,7 +101,6 @@ public class FeaturesMatchingResult extends ComparisonResult {
      */
     public Rectangle getRect2() {
         verifyPropertyPresence(RECT2);
-        //noinspection unchecked
         return mapToRect((Map<String, Object>) getCommandResult().get(RECT2));
     }
 }

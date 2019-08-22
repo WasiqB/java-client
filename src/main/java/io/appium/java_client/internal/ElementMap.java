@@ -16,10 +16,7 @@
 
 package io.appium.java_client.internal;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
 import com.google.common.collect.ImmutableMap;
-
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSElement;
@@ -31,14 +28,14 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 public enum ElementMap {
     ANDROID_UIAUTOMATOR2(AutomationName.ANDROID_UIAUTOMATOR2.toLowerCase(), AndroidElement.class),
-    SELENDROID(AutomationName.SELENDROID.toLowerCase(), AndroidElement.class),
     IOS_XCUI_TEST(AutomationName.IOS_XCUI_TEST.toLowerCase(), IOSElement.class),
     ANDROID_UI_AUTOMATOR(MobilePlatform.ANDROID.toLowerCase(), AndroidElement.class),
     IOS_UI_AUTOMATION(MobilePlatform.IOS.toLowerCase(), IOSElement.class),
     WINDOWS(MobilePlatform.WINDOWS, WindowsElement.class);
-
 
     private static final Map<String, ElementMap> mobileElementMap;
 
@@ -50,22 +47,12 @@ public enum ElementMap {
         mobileElementMap = builder.build();
     }
 
-
-
     private final String platformOrAutomation;
     private final Class<? extends RemoteWebElement> elementClass;
 
     private ElementMap(String platformOrAutomation, Class<? extends MobileElement> elementClass) {
         this.platformOrAutomation = platformOrAutomation;
         this.elementClass = elementClass;
-    }
-
-    public String getPlatformOrAutomation() {
-        return platformOrAutomation;
-    }
-
-    public Class<? extends RemoteWebElement> getElementClass() {
-        return elementClass;
     }
 
     /**
@@ -87,5 +74,13 @@ public enum ElementMap {
             return RemoteWebElement.class;
         }
         return element.getElementClass();
+    }
+
+    public String getPlatformOrAutomation() {
+        return this.platformOrAutomation;
+    }
+
+    public Class<? extends RemoteWebElement> getElementClass() {
+        return this.elementClass;
     }
 }

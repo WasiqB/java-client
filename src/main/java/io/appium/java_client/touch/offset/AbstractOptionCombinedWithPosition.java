@@ -1,11 +1,12 @@
 package io.appium.java_client.touch.offset;
 
-import static java.util.Optional.ofNullable;
-
 import io.appium.java_client.touch.ActionOptions;
 
 import java.util.Map;
 
+import static java.util.Optional.ofNullable;
+
+@SuppressWarnings("unchecked")
 public abstract class AbstractOptionCombinedWithPosition<T extends AbstractOptionCombinedWithPosition<T>>
         extends ActionOptions<AbstractOptionCombinedWithPosition<T>> {
     private ActionOptions<?> positionOption;
@@ -17,7 +18,7 @@ public abstract class AbstractOptionCombinedWithPosition<T extends AbstractOptio
      * @param positionOption required coordinates.     *
      * @return self-reference
      */
-    public T withPosition(PointOption positionOption) {
+    public <P extends PointOption <P>> T withPosition(PointOption <P> positionOption) {
         this.positionOption = positionOption;
         return (T) this;
     }
@@ -31,12 +32,13 @@ public abstract class AbstractOptionCombinedWithPosition<T extends AbstractOptio
      * @return self-reference
      */
     public T withElement(ElementOption element) {
-        positionOption = element;
+        this.positionOption = element;
         return (T) this;
     }
 
+    @Override
     protected void verify() {
-        ofNullable(positionOption).orElseThrow(() ->
+        ofNullable(this.positionOption).orElseThrow(() ->
                 new IllegalArgumentException("Some coordinates or an offset from an element should "
                         + "be defined. Use withPosition or withElement methods"));
     }
@@ -44,7 +46,7 @@ public abstract class AbstractOptionCombinedWithPosition<T extends AbstractOptio
     @Override
     public Map<String, Object> build() {
         final Map<String, Object> result = super.build();
-        result.putAll(positionOption.build());
+        result.putAll(this.positionOption.build());
         return result;
     }
 }

@@ -17,7 +17,6 @@
 
 package org.openqa.selenium;
 
-import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.logging.Logs;
 
 import java.net.URL;
@@ -90,6 +89,7 @@ public interface WebDriver extends SearchContext {
      * @see org.openqa.selenium.By
      * @see org.openqa.selenium.WebDriver.Timeouts
      */
+    @Override
     <T extends WebElement> List<T>  findElements(By by);
 
 
@@ -108,6 +108,7 @@ public interface WebDriver extends SearchContext {
      * @see org.openqa.selenium.By
      * @see org.openqa.selenium.WebDriver.Timeouts
      */
+    @Override
     <T extends WebElement> T findElement(By by);
 
     // Misc

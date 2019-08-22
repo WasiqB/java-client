@@ -16,11 +16,11 @@
 
 package io.appium.java_client;
 
-import static io.appium.java_client.MobileCommand.PERFORM_MULTI_TOUCH;
-import static io.appium.java_client.MobileCommand.PERFORM_TOUCH_ACTION;
-
 import java.util.List;
 import java.util.Map;
+
+import static io.appium.java_client.MobileCommand.PERFORM_MULTI_TOUCH;
+import static io.appium.java_client.MobileCommand.PERFORM_TOUCH_ACTION;
 
 public interface PerformsTouchActions extends ExecutesMethod {
     /**
@@ -36,7 +36,7 @@ public interface PerformsTouchActions extends ExecutesMethod {
      *                    touch actions to perform
      * @return the same touch action object
      */
-    default TouchAction performTouchAction(TouchAction touchAction) {
+    default <T extends TouchAction <T>> TouchAction <T> performTouchAction(TouchAction <T> touchAction) {
         Map<String, List<Object>> parameters = touchAction.getParameters();
         execute(PERFORM_TOUCH_ACTION, parameters);
         return touchAction.clearParameters();

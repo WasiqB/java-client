@@ -44,6 +44,7 @@ public interface ExecutesDriverScript extends ExecutesMethod {
      * @return The script result
      * @throws org.openqa.selenium.WebDriverException if there was a failure while executing the script
      */
+    @SuppressWarnings("unchecked")
     default ScriptValue executeDriverScript(String script, @Nullable ScriptOptions options) {
         Map<String, Object> data = new HashMap<>();
         data.put("script", checkNotNull(script));
@@ -51,9 +52,7 @@ public interface ExecutesDriverScript extends ExecutesMethod {
             data.putAll(options.build());
         }
         Response response = execute(EXECUTE_DRIVER_SCRIPT, data);
-        //noinspection unchecked
         Map<String, Object> value = (Map<String, Object>) response.getValue();
-        //noinspection unchecked
         return new ScriptValue(value.get("result"), (Map<String, Object>) value.get("logs"));
     }
 

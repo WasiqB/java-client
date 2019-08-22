@@ -16,8 +16,6 @@
 
 package io.appium.java_client;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;

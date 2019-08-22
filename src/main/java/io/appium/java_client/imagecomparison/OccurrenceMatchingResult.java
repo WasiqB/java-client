@@ -32,9 +32,9 @@ public class OccurrenceMatchingResult extends ComparisonResult {
      *
      * @return The region of the partial image occurrence on the full image.
      */
+    @SuppressWarnings("unchecked")
     public Rectangle getRect() {
         verifyPropertyPresence(RECT);
-        //noinspection unchecked
         return mapToRect((Map<String, Object>) getCommandResult().get(RECT));
     }
 }
