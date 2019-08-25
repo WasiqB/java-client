@@ -25,14 +25,26 @@ import java.net.UnknownHostException;
 
 public class BaseIOSTest {
 
-    protected static AppiumDriverLocalService service;
-    protected static IOSDriver<IOSElement> driver;
-    protected static final int PORT = 4723;
     public static final String DEVICE_NAME = System.getenv("IOS_DEVICE_NAME") != null
             ? System.getenv("IOS_DEVICE_NAME") : "iPhone X";
     public static final String PLATFORM_VERSION = System.getenv("IOS_PLATFORM_VERSION") != null
             ? System.getenv("IOS_PLATFORM_VERSION") : "11.4";
+    protected static final int PORT = 4723;
+    protected static IOSDriver<IOSElement> driver;
+    protected static AppiumDriverLocalService service;
 
+    /**
+     * finishing.
+     */
+    @AfterClass
+    public static void afterClass() {
+        if (driver != null) {
+            driver.quit();
+        }
+        if (service != null) {
+            service.stop();
+        }
+    }
 
     /**
      * Starts a local server.
@@ -46,17 +58,5 @@ public class BaseIOSTest {
         service.start();
         InetAddress inetAddress = InetAddress.getLocalHost();
         return inetAddress.getHostAddress();
-    }
-
-    /**
-     * finishing.
-     */
-    @AfterClass public static void afterClass() {
-        if (driver != null) {
-            driver.quit();
-        }
-        if (service != null) {
-            service.stop();
-        }
     }
 }

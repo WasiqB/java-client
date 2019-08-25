@@ -41,16 +41,16 @@ public enum ElementMap {
 
     static {
         ImmutableMap.Builder<String, ElementMap> builder = ImmutableMap.builder();
-        for (ElementMap e:values()) {
+        for (ElementMap e : values()) {
             builder.put(e.getPlatformOrAutomation(), e);
         }
         mobileElementMap = builder.build();
     }
 
-    private final String platformOrAutomation;
     private final Class<? extends RemoteWebElement> elementClass;
+    private final String platformOrAutomation;
 
-    private ElementMap(String platformOrAutomation, Class<? extends MobileElement> elementClass) {
+    private <T extends MobileElement<T>> ElementMap(String platformOrAutomation, Class<T> elementClass) {
         this.platformOrAutomation = platformOrAutomation;
         this.elementClass = elementClass;
     }
@@ -58,7 +58,7 @@ public enum ElementMap {
     /**
      * Gets element class by {@code platform} and mobile {@code automation} type.
      *
-     * @param platform is the mobile platform. See {@link MobilePlatform}.
+     * @param platform   is the mobile platform. See {@link MobilePlatform}.
      * @param automation is the mobile automation type. See {@link AutomationName}
      * @return subclass of {@link RemoteWebElement} that convenient to current session details.
      */
@@ -76,11 +76,11 @@ public enum ElementMap {
         return element.getElementClass();
     }
 
-    public String getPlatformOrAutomation() {
-        return this.platformOrAutomation;
-    }
-
     public Class<? extends RemoteWebElement> getElementClass() {
         return this.elementClass;
+    }
+
+    public String getPlatformOrAutomation() {
+        return this.platformOrAutomation;
     }
 }

@@ -23,7 +23,7 @@ import java.util.Map;
 public final class CommandExecutionHelper {
 
     public static <T> T execute(ExecutesMethod executesMethod,
-        Map.Entry<String, Map<String, ?>> keyValuePair) {
+                                Map.Entry<String, Map<String, ?>> keyValuePair) {
         return handleResponse(executesMethod.execute(keyValuePair.getKey(), keyValuePair.getValue()));
     }
 
@@ -31,6 +31,7 @@ public final class CommandExecutionHelper {
         return handleResponse(executesMethod.execute(command));
     }
 
+    @SuppressWarnings("unchecked")
     private static <T> T handleResponse(Response response) {
         if (response != null) {
             return (T) response.getValue();

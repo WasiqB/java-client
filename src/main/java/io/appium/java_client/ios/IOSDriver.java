@@ -16,12 +16,7 @@
 
 package io.appium.java_client.ios;
 
-import static io.appium.java_client.MobileCommand.RUN_APP_IN_BACKGROUND;
-import static io.appium.java_client.MobileCommand.prepareArguments;
-import static org.openqa.selenium.remote.DriverCommand.EXECUTE_SCRIPT;
-
 import com.google.common.collect.ImmutableMap;
-
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.FindsByIosClassChain;
 import io.appium.java_client.FindsByIosNSPredicate;
@@ -47,21 +42,25 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.Map;
 
+import static io.appium.java_client.MobileCommand.RUN_APP_IN_BACKGROUND;
+import static io.appium.java_client.MobileCommand.prepareArguments;
+import static org.openqa.selenium.remote.DriverCommand.EXECUTE_SCRIPT;
+
 /**
  * iOS driver implementation.
  *
  * @param <T> the required type of class which implement
- *           {@link org.openqa.selenium.WebElement}.
- *           Instances of the defined type will be returned via findElement* and findElements*.
- *           Warning (!!!). Allowed types:
- *           {@link org.openqa.selenium.WebElement}
- *           {@link org.openqa.selenium.remote.RemoteWebElement}
- *           {@link io.appium.java_client.MobileElement}
- *           {@link io.appium.java_client.ios.IOSElement}
+ *            {@link org.openqa.selenium.WebElement}.
+ *            Instances of the defined type will be returned via findElement* and findElements*.
+ *            Warning (!!!). Allowed types:
+ *            {@link org.openqa.selenium.WebElement}
+ *            {@link org.openqa.selenium.remote.RemoteWebElement}
+ *            {@link io.appium.java_client.MobileElement}
+ *            {@link io.appium.java_client.ios.IOSElement}
  */
 public class IOSDriver<T extends WebElement>
-    extends AppiumDriver<T>
-    implements HidesKeyboardWithKeyName, ShakesDevice, HasIOSSettings, HasOnScreenKeyboard,
+        extends AppiumDriver<T>
+        implements HidesKeyboardWithKeyName, ShakesDevice, HasIOSSettings, HasOnScreenKeyboard,
         LocksDevice, PerformsTouchID, FindsByIosNSPredicate<T>, FindsByIosClassChain<T>,
         PushesFiles, CanRecordScreen, HasIOSClipboard, ListensToSyslogMessages,
         HasBattery<IOSBatteryInfo> {
@@ -73,9 +72,9 @@ public class IOSDriver<T extends WebElement>
     /**
      * Creates a new instance based on command {@code executor} and {@code capabilities}.
      *
-     * @param executor is an instance of {@link HttpCommandExecutor}
-     *                 or class that extends it. Default commands or another vendor-specific
-     *                 commands may be specified there.
+     * @param executor     is an instance of {@link HttpCommandExecutor}
+     *                     or class that extends it. Default commands or another vendor-specific
+     *                     commands may be specified there.
      * @param capabilities take a look at {@link Capabilities}
      */
     public IOSDriver(HttpCommandExecutor executor, Capabilities capabilities) {
@@ -85,7 +84,7 @@ public class IOSDriver<T extends WebElement>
     /**
      * Creates a new instance based on Appium server URL and {@code capabilities}.
      *
-     * @param remoteAddress is the address of remotely/locally started Appium server
+     * @param remoteAddress       is the address of remotely/locally started Appium server
      * @param desiredCapabilities take a look at {@link Capabilities}
      */
     public IOSDriver(URL remoteAddress, Capabilities desiredCapabilities) {
@@ -95,20 +94,20 @@ public class IOSDriver<T extends WebElement>
     /**
      * Creates a new instance based on Appium server URL, HTTP client factory and {@code capabilities}.
      *
-     * @param remoteAddress is the address of remotely/locally started Appium server
-     * @param httpClientFactory take a look at {@link HttpClient.Factory}
+     * @param remoteAddress       is the address of remotely/locally started Appium server
+     * @param httpClientFactory   take a look at {@link HttpClient.Factory}
      * @param desiredCapabilities take a look at {@link Capabilities}
      */
     public IOSDriver(URL remoteAddress, HttpClient.Factory httpClientFactory,
-        Capabilities desiredCapabilities) {
+                     Capabilities desiredCapabilities) {
         super(remoteAddress, httpClientFactory,
-            updateDefaultPlatformName(desiredCapabilities, IOS_DEFAULT_PLATFORM));
+                updateDefaultPlatformName(desiredCapabilities, IOS_DEFAULT_PLATFORM));
     }
 
     /**
      * Creates a new instance based on Appium driver local service and {@code capabilities}.
      *
-     * @param service take a look at {@link AppiumDriverLocalService}
+     * @param service             take a look at {@link AppiumDriverLocalService}
      * @param desiredCapabilities take a look at {@link Capabilities}
      */
     public IOSDriver(AppiumDriverLocalService service, Capabilities desiredCapabilities) {
@@ -118,19 +117,19 @@ public class IOSDriver<T extends WebElement>
     /**
      * Creates a new instance based on Appium driver local service, HTTP client factory and {@code capabilities}.
      *
-     * @param service take a look at {@link AppiumDriverLocalService}
-     * @param httpClientFactory take a look at {@link HttpClient.Factory}
+     * @param service             take a look at {@link AppiumDriverLocalService}
+     * @param httpClientFactory   take a look at {@link HttpClient.Factory}
      * @param desiredCapabilities take a look at {@link Capabilities}
      */
     public IOSDriver(AppiumDriverLocalService service, HttpClient.Factory httpClientFactory,
-        Capabilities desiredCapabilities) {
+                     Capabilities desiredCapabilities) {
         super(service, httpClientFactory, updateDefaultPlatformName(desiredCapabilities, IOS_DEFAULT_PLATFORM));
     }
 
     /**
      * Creates a new instance based on Appium service builder and {@code capabilities}.
      *
-     * @param builder take a look at {@link AppiumServiceBuilder}
+     * @param builder             take a look at {@link AppiumServiceBuilder}
      * @param desiredCapabilities take a look at {@link Capabilities}
      */
     public IOSDriver(AppiumServiceBuilder builder, Capabilities desiredCapabilities) {
@@ -140,20 +139,20 @@ public class IOSDriver<T extends WebElement>
     /**
      * Creates a new instance based on Appium service builder, HTTP client factory and {@code capabilities}.
      *
-     * @param builder take a look at {@link AppiumServiceBuilder}
-     * @param httpClientFactory take a look at {@link HttpClient.Factory}
+     * @param builder             take a look at {@link AppiumServiceBuilder}
+     * @param httpClientFactory   take a look at {@link HttpClient.Factory}
      * @param desiredCapabilities take a look at {@link Capabilities}
      */
     public IOSDriver(AppiumServiceBuilder builder, HttpClient.Factory httpClientFactory,
-        Capabilities desiredCapabilities) {
+                     Capabilities desiredCapabilities) {
         super(builder, httpClientFactory,
-            updateDefaultPlatformName(desiredCapabilities, IOS_DEFAULT_PLATFORM));
+                updateDefaultPlatformName(desiredCapabilities, IOS_DEFAULT_PLATFORM));
     }
 
     /**
      * Creates a new instance based on HTTP client factory and {@code capabilities}.
      *
-     * @param httpClientFactory take a look at {@link HttpClient.Factory}
+     * @param httpClientFactory   take a look at {@link HttpClient.Factory}
      * @param desiredCapabilities take a look at {@link Capabilities}
      */
     public IOSDriver(HttpClient.Factory httpClientFactory, Capabilities desiredCapabilities) {
@@ -169,23 +168,6 @@ public class IOSDriver<T extends WebElement>
         super(updateDefaultPlatformName(desiredCapabilities, IOS_DEFAULT_PLATFORM));
     }
 
-    /**
-     * Runs the current app as a background app for the number of seconds
-     * or minimizes the app.
-     *
-     * @param duration The time to run App in background.
-     */
-    @Override public void runAppInBackground(Duration duration) {
-        // timeout parameter is expected to be in milliseconds
-        // float values are allowed
-        execute(RUN_APP_IN_BACKGROUND,
-                prepareArguments("seconds", prepareArguments("timeout", duration.toMillis())));
-    }
-
-    @Override public TargetLocator switchTo() {
-        return new InnerTargetLocator();
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public IOSBatteryInfo getBatteryInfo() {
@@ -193,44 +175,63 @@ public class IOSDriver<T extends WebElement>
                 "script", "mobile: batteryInfo", "args", Collections.emptyList())).getValue());
     }
 
-    private class InnerTargetLocator extends RemoteTargetLocator {
-        @Override public Alert alert() {
-            return new IOSAlert(super.alert());
+    @Override
+    public synchronized StringWebSocketClient getSyslogClient() {
+        if (this.syslogClient == null) {
+            this.syslogClient = new StringWebSocketClient();
         }
+        return this.syslogClient;
+    }
+
+    /**
+     * Runs the current app as a background app for the number of seconds
+     * or minimizes the app.
+     *
+     * @param duration The time to run App in background.
+     */
+    @Override
+    public void runAppInBackground(Duration duration) {
+        // timeout parameter is expected to be in milliseconds
+        // float values are allowed
+        execute(RUN_APP_IN_BACKGROUND,
+                prepareArguments("seconds", prepareArguments("timeout", duration.toMillis())));
+    }
+
+    @Override
+    public TargetLocator switchTo() {
+        return new InnerTargetLocator();
     }
 
     class IOSAlert implements Alert {
-
-        private final Alert alert;
-
         IOSAlert(Alert alert) {
-            this.alert = alert;
         }
 
-        @Override public void dismiss() {
-            execute(DriverCommand.DISMISS_ALERT);
-        }
-
-        @Override public void accept() {
+        @Override
+        public void accept() {
             execute(DriverCommand.ACCEPT_ALERT);
         }
 
-        @Override public String getText() {
+        @Override
+        public void dismiss() {
+            execute(DriverCommand.DISMISS_ALERT);
+        }
+
+        @Override
+        public String getText() {
             Response response = execute(DriverCommand.GET_ALERT_TEXT);
             return response.getValue().toString();
         }
 
-        @Override public void sendKeys(String keysToSend) {
+        @Override
+        public void sendKeys(String keysToSend) {
             execute(DriverCommand.SET_ALERT_VALUE, prepareArguments("value", keysToSend));
         }
-
     }
 
-    @Override
-    public synchronized StringWebSocketClient getSyslogClient() {
-        if (syslogClient == null) {
-            syslogClient = new StringWebSocketClient();
+    private class InnerTargetLocator extends RemoteTargetLocator {
+        @Override
+        public Alert alert() {
+            return new IOSAlert(super.alert());
         }
-        return syslogClient;
     }
 }

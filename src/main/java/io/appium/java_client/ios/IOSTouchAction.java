@@ -19,7 +19,6 @@ package io.appium.java_client.ios;
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.touch.IOSPressOptions;
-import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
 
 public class IOSTouchAction extends TouchAction<IOSTouchAction> {
@@ -37,7 +36,7 @@ public class IOSTouchAction extends TouchAction<IOSTouchAction> {
     public IOSTouchAction doubleTap(PointOption doubleTapOption) {
         ActionParameter action = new ActionParameter("doubleTap",
                 doubleTapOption);
-        parameterBuilder.add(action);
+        this.parameterBuilder.add(action);
         return this;
     }
 
@@ -48,7 +47,7 @@ public class IOSTouchAction extends TouchAction<IOSTouchAction> {
      * @return this TouchAction, for chaining.
      */
     public IOSTouchAction press(IOSPressOptions pressOptions) {
-        parameterBuilder.add(new ActionParameter("press", pressOptions));
+        this.parameterBuilder.add(new ActionParameter("press", pressOptions));
         return this;
     }
 }

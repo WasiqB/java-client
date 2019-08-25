@@ -65,7 +65,8 @@ public interface InteractsWithApps extends ExecutesMethod {
      * @param options Set of the corresponding instllation options for
      *                the particular platform.
      */
-    default <T extends BaseInstallApplicationOptions <T>> void installApp(String appPath, @Nullable BaseInstallApplicationOptions <T> options) {
+    default <T extends BaseInstallApplicationOptions<T>> void installApp(String appPath,
+                 @Nullable BaseInstallApplicationOptions<T> options) {
         String[] parameters = options == null ? new String[]{"appPath"} :
                 new String[]{"appPath", "options"};
         Object[] values = options == null ? new Object[]{appPath} :
@@ -121,7 +122,8 @@ public interface InteractsWithApps extends ExecutesMethod {
      *                 particular platform.
      * @return true if the uninstall was successful.
      */
-    default <T extends BaseRemoveApplicationOptions <T>> boolean removeApp(String bundleId, @Nullable BaseRemoveApplicationOptions <T> options) {
+    default <T extends BaseRemoveApplicationOptions<T>> boolean removeApp(String bundleId,
+                  @Nullable BaseRemoveApplicationOptions<T> options) {
         String[] parameters = options == null ? new String[]{"bundleId"} :
                 new String[]{"bundleId", "options"};
         Object[] values = options == null ? new Object[]{bundleId} :
@@ -156,7 +158,8 @@ public interface InteractsWithApps extends ExecutesMethod {
      * @param options  the set of activation options supported by the
      *                 particular platform.
      */
-    default <T extends BaseActivateApplicationOptions <T>> void activateApp(String bundleId, @Nullable BaseActivateApplicationOptions <T> options) {
+    default <T extends BaseActivateApplicationOptions<T>> void activateApp(String bundleId,
+               @Nullable BaseActivateApplicationOptions<T> options) {
         String[] parameters = options == null ? new String[]{"bundleId"} :
                 new String[]{"bundleId", "options"};
         Object[] values = options == null ? new Object[]{bundleId} :
@@ -194,7 +197,8 @@ public interface InteractsWithApps extends ExecutesMethod {
      *                 particular platform.
      * @return true if the app was running before and has been successfully stopped.
      */
-    default <T extends BaseTerminateApplicationOptions <T>> boolean terminateApp(String bundleId, @Nullable BaseTerminateApplicationOptions <T> options) {
+    default <T extends BaseTerminateApplicationOptions<T>> boolean terminateApp(String bundleId,
+                @Nullable BaseTerminateApplicationOptions<T> options) {
         String[] parameters = options == null ? new String[]{"bundleId"} :
                 new String[]{"bundleId", "options"};
         Object[] values = options == null ? new Object[]{bundleId} :

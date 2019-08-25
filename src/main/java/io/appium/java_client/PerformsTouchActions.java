@@ -24,25 +24,6 @@ import static io.appium.java_client.MobileCommand.PERFORM_TOUCH_ACTION;
 
 public interface PerformsTouchActions extends ExecutesMethod {
     /**
-     * Performs a chain of touch actions, which together can be considered an
-     * entire gesture. See the Webriver 3 spec
-     * https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html
-     * It's more convenient to call the perform() method of the TouchAction
-     * object itself.
-     * All the existing touch action parameters will be wiped out after this method
-     * is called.
-     *
-     * @param touchAction A TouchAction object, which contains a list of individual
-     *                    touch actions to perform
-     * @return the same touch action object
-     */
-    default <T extends TouchAction <T>> TouchAction <T> performTouchAction(TouchAction <T> touchAction) {
-        Map<String, List<Object>> parameters = touchAction.getParameters();
-        execute(PERFORM_TOUCH_ACTION, parameters);
-        return touchAction.clearParameters();
-    }
-
-    /**
      * Performs multiple TouchAction gestures at the same time, to simulate
      * multiple fingers/touch inputs. See the Webriver 3 spec
      * https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html
@@ -57,5 +38,23 @@ public interface PerformsTouchActions extends ExecutesMethod {
         Map<String, List<Object>> parameters = multiAction.getParameters();
         execute(PERFORM_MULTI_TOUCH, parameters);
         multiAction.clearActions();
+    }
+
+    /**
+     * Performs a chain of touch actions, which together can be considered an
+     * entire gesture. See the Webriver 3 spec
+     * https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html
+     * It's more convenient to call the perform() method of the TouchAction
+     * object itself.
+     * All the existing touch action parameters will be wiped out after this method
+     * is called.
+     *
+     * @param touchAction A TouchAction object, which contains a list of individual
+     *                    touch actions to perform
+     */
+    default <T extends TouchAction<T>> void performTouchAction(TouchAction<T> touchAction) {
+        Map<String, List<Object>> parameters = touchAction.getParameters();
+        execute(PERFORM_TOUCH_ACTION, parameters);
+        touchAction.clearParameters();
     }
 }

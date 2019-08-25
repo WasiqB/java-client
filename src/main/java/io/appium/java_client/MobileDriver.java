@@ -32,45 +32,64 @@ import org.openqa.selenium.internal.FindsByXPath;
 
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public interface MobileDriver<T extends WebElement> extends WebDriver, PerformsTouchActions, ContextAware, Rotatable,
-    FindsByAccessibilityId<T>, LocationContext, HidesKeyboard, HasDeviceTime,
-    InteractsWithFiles, InteractsWithApps, HasAppStrings, FindsByClassName, FindsByCssSelector, FindsById,
+        FindsByAccessibilityId<T>, LocationContext, HidesKeyboard, HasDeviceTime,
+        InteractsWithFiles, InteractsWithApps, HasAppStrings, FindsByClassName, FindsByCssSelector, FindsById,
         FindsByLinkText, FindsByName, FindsByTagName, FindsByXPath, FindsByFluentSelector<T>, ExecutesMethod,
         HasSessionDetails {
 
-    List<T> findElements(By by);
-
+    @Override
     T findElement(By by);
 
+    @Override
     T findElementByClassName(String className);
 
-    List<T> findElementsByClassName(String className);
-
+    @Override
     T findElementByCssSelector(String cssSelector);
 
-    List<T> findElementsByCssSelector(String cssSelector);
-
+    @Override
     T findElementById(String id);
 
-    List<T> findElementsById(String id);
-
+    @Override
     T findElementByLinkText(String linkText);
 
-    List<T> findElementsByLinkText(String linkText);
-
-    T findElementByPartialLinkText(String partialLinkText);
-
-    List<T> findElementsByPartialLinkText(String partialLinkText);
-
+    @Override
     T findElementByName(String name);
 
-    List<T> findElementsByName(String name);
+    @Override
+    T findElementByPartialLinkText(String partialLinkText);
 
+    @Override
     T findElementByTagName(String tagName);
 
-    List<T> findElementsByTagName(String tagName);
-
+    @Override
     T findElementByXPath(String xPath);
 
+    @Override
+    List<T> findElements(By by);
+
+    @Override
+    List<T> findElementsByClassName(String className);
+
+    @Override
+    List<T> findElementsByCssSelector(String cssSelector);
+
+    @Override
+    List<T> findElementsById(String id);
+
+    @Override
+    List<T> findElementsByLinkText(String linkText);
+
+    @Override
+    List<T> findElementsByName(String name);
+
+    @Override
+    List<T> findElementsByPartialLinkText(String partialLinkText);
+
+    @Override
+    List<T> findElementsByTagName(String tagName);
+
+    @Override
     List<T> findElementsByXPath(String xPath);
 }

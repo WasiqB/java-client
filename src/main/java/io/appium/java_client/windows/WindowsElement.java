@@ -19,5 +19,5 @@ package io.appium.java_client.windows;
 import io.appium.java_client.FindsByWindowsAutomation;
 import io.appium.java_client.MobileElement;
 
-public class WindowsElement extends MobileElement implements FindsByWindowsAutomation<MobileElement> {
+public class WindowsElement extends MobileElement<WindowsElement> implements FindsByWindowsAutomation<WindowsElement> {
 }

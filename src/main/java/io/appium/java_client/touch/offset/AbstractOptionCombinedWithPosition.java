@@ -11,16 +11,18 @@ public abstract class AbstractOptionCombinedWithPosition<T extends AbstractOptio
         extends ActionOptions<AbstractOptionCombinedWithPosition<T>> {
     private ActionOptions<?> positionOption;
 
-    /**
-     * Some actions may require coordinates. Invocation of this method
-     * replaces the result of previous {@link #withElement(ElementOption)} invocation.
-     *
-     * @param positionOption required coordinates.     *
-     * @return self-reference
-     */
-    public <P extends PointOption <P>> T withPosition(PointOption <P> positionOption) {
-        this.positionOption = positionOption;
-        return (T) this;
+    @Override
+    public Map<String, Object> build() {
+        final Map<String, Object> result = super.build();
+        result.putAll(this.positionOption.build());
+        return result;
+    }
+
+    @Override
+    protected void verify() {
+        ofNullable(this.positionOption).orElseThrow(() ->
+                new IllegalArgumentException("Some coordinates or an offset from an element should "
+                        + "be defined. Use withPosition or withElement methods"));
     }
 
     /**
@@ -36,17 +38,15 @@ public abstract class AbstractOptionCombinedWithPosition<T extends AbstractOptio
         return (T) this;
     }
 
-    @Override
-    protected void verify() {
-        ofNullable(this.positionOption).orElseThrow(() ->
-                new IllegalArgumentException("Some coordinates or an offset from an element should "
-                        + "be defined. Use withPosition or withElement methods"));
-    }
-
-    @Override
-    public Map<String, Object> build() {
-        final Map<String, Object> result = super.build();
-        result.putAll(this.positionOption.build());
-        return result;
+    /**
+     * Some actions may require coordinates. Invocation of this method
+     * replaces the result of previous {@link #withElement(ElementOption)} invocation.
+     *
+     * @param positionOption required coordinates.     *
+     * @return self-reference
+     */
+    public T withPosition(PointOption positionOption) {
+        this.positionOption = positionOption;
+        return (T) this;
     }
 }
